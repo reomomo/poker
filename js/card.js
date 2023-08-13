@@ -1,8 +1,8 @@
 /**
 * Cardクラス
 */
-
 export default class Card {
+
   /**
    * プロパティ
    */

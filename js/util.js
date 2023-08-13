@@ -1,12 +1,11 @@
 /**
 * Utilクラス
 */
-
 export default class Util {
-/**
-* 指定した時間だけ待つ（未指定の場合は1秒）
-*/
 
+  /**
+  * 指定した時間だけ待つ（未指定の場合は1秒）
+  */
   static sleep = (wait = 1000) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => resolve(), wait);
@@ -16,7 +15,6 @@ export default class Util {
   /**
   * イベントハンドラを追加する
   */
-
   static addEventListener = (selector, event, handler) => {
     document.querySelectorAll(selector).forEach((e) => e.addEventListener(event, handler));
   };
@@ -24,7 +22,6 @@ export default class Util {
   /**
   * 数値を合計する
   */
-
   static sum = (...numbers) => {
     let sum = 0;
     numbers.forEach((e) => {
