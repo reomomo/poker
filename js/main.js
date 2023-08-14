@@ -52,50 +52,64 @@ export default class Game {
   #initialize() {
     this.#you = new Player(".card.you");
     this.#com = new Com(".card.com");
+    // 山札のカードを生成する
     this.#cards = [];
     [...Array(52)].map((_, index) => {
       // インデックス番号を持つカードを生成して山札に追加する
       this.#cards.push(new Card(index + 1));
     });
-    /**
-     * 山札のカードをシャッフルする
-     */
-    #shuffleCard() {
-      // 100回繰り返す
-      [...Array(100)].forEach(() => {
-        // 山札から2枚のカードをランダムに選んで交換する
-        const j = Math.floor(Math.random() * this.#cards.length);
-        const k = Math.floor(Math.random() * this.#cards.length);
-        [this.#cards[j], this.#cards[k]] = [this.#cards[k], this.#cards[j]];
-      });
-    };
-    /**
-     * 山札のカードをプレイヤーに配る
-     */
-    #dealCard(player, n) {
-      // n回繰り返す
-      [...Array(n)].map(() => {
-        // 山札からカードを1枚取り出してプレイヤーに配る
-        player.addCard(this.#cards.pop());
-      });
-    };
+    // 山札のカードをシャッフルする
+    this.#shuffleCard();
+
+    // 山札のカードを5枚ずつプレイヤーに配る
+    this.#dealCard(this.#you,5);
+    this.#dealCard(this.#com,5);
+
+    // ゲーム実行状態を更新
     this.#isRunning = true;
-    /**
-     * 画面の描画を更新する
-     */
-    #updateView() {
-      // プレイヤーのカードを描画する
-      this.#you.displayCard(true);
-      // 相手のカードを描画する
-      this.#com.displayCard(!this.#isRunning);
-      // ボタンを描画する
-      if (this.#isRunning) {
-        document.querySelector("#replay").setAttribute("disabled", true);
-        document.querySelector("#draw").removeAttribute("disabled");
-        document.querySelector("#replay").removeAttribute("disabled");
-        document.querySelector("#draw").setAttribute("disabled", true);
-      }
-    };
+
+    // 画面の描画を更新する
+    this.#updateView();
+  }
+
+  /**
+   * 山札のカードをシャッフルする
+   */
+  #shuffleCard() {
+    // 100回繰り返す
+    [...Array(100)].forEach(() => {
+      // 山札から2枚のカードをランダムに選んで交換する
+      const j = Math.floor(Math.random() * this.#cards.length);
+      const k = Math.floor(Math.random() * this.#cards.length);
+      [this.#cards[j], this.#cards[k]] = [this.#cards[k], this.#cards[j]];
+    });
+  }
+  /**
+   * 山札のカードをプレイヤーに配る
+   */
+  #dealCard(player, n) {
+    // n回繰り返す
+    [...Array(n)].map(() => {
+      // 山札からカードを1枚取り出してプレイヤーに配る
+      player.addCard(this.#cards.pop());
+    });
+  }
+
+  /**
+   * 画面の描画を更新する
+   */
+  #updateView() {
+    // プレイヤーのカードを描画する
+    this.#you.displayCard(true);
+    // 相手のカードを描画する
+    this.#com.displayCard(!this.#isRunning);
+    // ボタンを描画する
+    if (this.#isRunning) {
+      document.querySelector("#replay").setAttribute("disabled", true);
+      document.querySelector("#draw").removeAttribute("disabled");
+      document.querySelector("#replay").removeAttribute("disabled");
+      document.querySelector("#draw").setAttribute("disabled", true);
+    }
   }
 
   /**
