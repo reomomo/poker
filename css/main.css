@@ -7,7 +7,7 @@ body {
   position: fixed;
   inset: 0;
   margin: auto;
-  width: clamp(300px, 100% 540px);
+  width: clamp(300px, 100%, 540px);
   border-spacing: 5px;
 }
 
@@ -62,6 +62,6 @@ body {
   box-shadow: var(--drop-shadow);
 }
 
-.button+.button {
+.button + .button {
   margin-top: 5px;
 }
