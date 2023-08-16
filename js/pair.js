@@ -28,7 +28,7 @@ export default class Pair {
     ) {
       isPair = true;
       // 5枚のランクを合計
-      this.#rank = Util.sum(cards[0].rank,cards[1].rank,cards[1].rank,cards[2].rank,cards[3].rank,cards[4].rank);
+      this.#rank = Util.sum(cards[0].rank,cards[1].rank,cards[2].rank,cards[3].rank,cards[4].rank);
     }
     return isPair;
   };
@@ -45,6 +45,25 @@ export default class Pair {
       cards[0].suit === cards[2].suit && // 1,3枚目が同じ絵柄
       cards[0].suit === cards[3].suit && // 1,4枚目が同じ絵柄
       cards[0].suit === cards[4].suit && // 1,5枚目が同じ絵柄
+      // 1枚目のランクが2
+      cards[0].rank == 2 &&
+      // 2枚目のランクが3
+      cards[1].rank == 3 &&
+      // 3枚目のランクが4
+      cards[2].rank == 4 &&
+      // 4枚目のランクが5
+      cards[3].rank == 5 &&
+      // 5枚目のランクが14
+      cards[4].rank == 14
+    ) {
+      isPair = true;
+    // 5枚のランクを合計
+      this.#rank = Util.sum(cards[0].rank,cards[1].rank,cards[2].rank,cards[3].rank,cards[4].rank);
+    } else if (
+      cards[0].suit === cards[1].suit && // 1,2枚目が同じ絵柄
+      cards[0].suit === cards[2].suit && // 1,3枚目が同じ絵柄
+      cards[0].suit === cards[3].suit && // 1,4枚目が同じ絵柄
+      cards[0].suit === cards[4].suit && // 1,5枚目が同じ絵柄
       // 1,2枚目のランクが連続
       cards[0].rank + 1 === cards[1].rank &&
       // 2,3枚目のランクが連続
@@ -56,7 +75,7 @@ export default class Pair {
     ) {
       isPair = true;
     // 5枚のランクを合計
-      this.#rank = Util.sum(cards[0].rank,cards[1].rank,cards[1].rank,cards[2].rank,cards[3].rank,cards[4].rank);
+      this.#rank = Util.sum(cards[0].rank,cards[1].rank,cards[2].rank,cards[3].rank,cards[4].rank);
     }
     return isPair;
   };
@@ -155,13 +174,28 @@ export default class Pair {
     let isPair = false;
     // 5枚のランクが連続
     if (
-      //1,2枚目のランクが連続
+      // 1枚目のランクが2
+      cards[0].rank === 2 &&
+      // 2枚目のランクが3
+      cards[1].rank === 3 &&
+      // 3枚目のランクが4
+      cards[2].rank === 4 &&
+      // 4枚目のランクが5
+      cards[3].rank === 5 &&
+      // 5枚目のランクが14
+      cards[4].rank === 14
+    ) {
+      isPair = true;
+    // 5枚のランクを合計
+      this.#rank = Util.sum(cards[0].rank,cards[1].rank,cards[2].rank,cards[3].rank,cards[4].rank);
+    } else if (
+      // 1,2枚目のランクが連続
       cards[0].rank + 1 === cards[1].rank &&
-      //2,3枚目のランクが連続
+      // 2,3枚目のランクが連続
       cards[1].rank + 1 === cards[2].rank &&
-      //3,4枚目のランクが連続
+      // 3,4枚目のランクが連続
       cards[2].rank + 1 === cards[3].rank &&
-      //4,5枚目のランクが連続
+      // 4,5枚目のランクが連続
       cards[3].rank + 1 === cards[4].rank
     ) {
       isPair = true;
