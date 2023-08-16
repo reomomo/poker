@@ -161,6 +161,7 @@ export default class Game {
       this.#cards.unshift(this.#com.drawCard(this.#cards.pop()));
     });
     const comResult = Pair.judge(this.#com.cards);
+    // 相手（COM）の役がスリーカード以上揃ったら自動でShow Down
     if (comResult.strength >= 3) {
       // 画面の描画を更新する
       this.#updateView();

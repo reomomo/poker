@@ -7,6 +7,7 @@ export default class Pair {
    * プロパティ
    */
   static #rank = 0; // 役を構成するランク
+  static #suit = 0; // 役の絵柄
 
   /**
    * ロイヤルストレートフラッシュの成否を判定する
@@ -27,6 +28,8 @@ export default class Pair {
       cards[0].rank === 14 // 5枚目のランクが14(A)
     ) {
       isPair = true;
+      // 絵柄での勝敗確認の為に絵柄をインスタンス化
+      this.#suit = cards[0].suit;
       // 5枚のランクを合計
       this.#rank = Util.sum(cards[0].rank,cards[1].rank,cards[2].rank,cards[3].rank,cards[4].rank);
     }
@@ -57,6 +60,8 @@ export default class Pair {
       cards[4].rank === 14
     ) {
       isPair = true;
+      // 絵柄での勝敗確認の為に絵柄をインスタンス化
+      this.#suit = cards[0].suit;
     // 5枚のランクを合計
       this.#rank = Util.sum(cards[0].rank,cards[1].rank,cards[2].rank,cards[3].rank,cards[4].rank);
     } else if (
@@ -74,6 +79,8 @@ export default class Pair {
       cards[3].rank + 1 === cards[4].rank
     ) {
       isPair = true;
+      // 絵柄での勝敗確認の為に絵柄をインスタンス化
+      this.#suit = cards[0].suit;
     // 5枚のランクを合計
       this.#rank = Util.sum(cards[0].rank,cards[1].rank,cards[2].rank,cards[3].rank,cards[4].rank);
     }
@@ -160,6 +167,8 @@ export default class Pair {
       cards[0].suit === cards[4].suit // 1,5枚目が同じ絵柄
     ) {
       isPair = true;
+      // 絵柄での勝敗確認の為に絵柄をインスタンス化
+      this.#suit = cards[0].suit;
       // 5枚のランクを合計
       this.#rank = Util.sum(cards[0].rank,cards[1].rank,cards[2].rank,cards[3].rank,cards[4].rank);
     }
@@ -327,23 +336,65 @@ export default class Pair {
     // ロイヤルストレートフラッシュの判定
     if (this.isRoyalStraightFlush(_cards)) {
       result = {
-        strength: 9,
-        rank: this.#rank,
-        hand: "ロイヤルストレートフラッシュ",
       };
+      if (this.#suit == 1) {
+        result = {
+          strength: 18,
+          rank: this.#rank,
+          hand: "ロイヤルストレートフラッシュ(スペード)",
+        };
+      } else if (this.#suit == 4) {
+        result = {
+          strength: 17,
+          rank: this.#rank,
+          hand: "ロイヤルストレートフラッシュ(ハート)",
+        };
+      } else if (this.#suit == 3) {
+        result = {
+          strength: 16,
+          rank: this.#rank,
+          hand: "ロイヤルストレートフラッシュ(ダイヤ)",
+        };
+      } else if (this.#suit == 2) {
+        result = {
+          strength: 15,
+          rank: this.#rank,
+          hand: "ロイヤルストレートフラッシュ(クローバー)",
+        };
+      }
     }
     // ストレートフラッシュの判定
     else if (this.isStraightFlush(_cards)) {
-      result = {
-        strength: 8,
-        rank: this.#rank,
-        hand: "ストレートフラッシュ",
-      };
+      if (this.#suit == 1) {
+        result = {
+          strength: 14,
+          rank: this.#rank,
+          hand: "ストレートフラッシュ(スペード)",
+        };
+      } else if (this.#suit == 4) {
+        result = {
+          strength: 13,
+          rank: this.#rank,
+          hand: "ストレートフラッシュ(ハート)",
+        };
+      } else if (this.#suit == 3) {
+        result = {
+          strength: 12,
+          rank: this.#rank,
+          hand: "ストレートフラッシュ(ダイヤ)",
+        };
+      } else if (this.#suit == 2) {
+        result = {
+          strength: 11,
+          rank: this.#rank,
+          hand: "ストレートフラッシュ(クローバー)",
+        };
+      }
     }
     // フォーカードの判定
     else if (this.isFourCard(_cards)) {
       result = {
-        strength: 7,
+        strength: 10,
         rank: this.#rank,
         hand: "フォーカード",
       };
@@ -351,18 +402,38 @@ export default class Pair {
     // フルハウスの判定
     else if (this.isFullHouse(_cards)) {
       result = {
-        strength: 6,
+        strength: 9,
         rank: this.#rank,
         hand: "フルハウス",
       };
     }
     // フラッシュの判定
     else if (this.isFlush(_cards)) {
-      result = {
-        strength: 5,
-        rank: this.#rank,
-        hand: "フラッシュ",
-      };
+      if (this.#suit == 1) {
+        result = {
+          strength: 8,
+          rank: this.#rank,
+          hand: "フラッシュ(スペード)",
+        };
+      } else if (this.#suit == 4) {
+        result = {
+          strength: 7,
+          rank: this.#rank,
+          hand: "フラッシュ(ハート)",
+        };
+      } else if (this.#suit == 3) {
+        result = {
+          strength: 6,
+          rank: this.#rank,
+          hand: "フラッシュ(ダイヤ)",
+        };
+      } else if (this.#suit == 2) {
+        result = {
+          strength: 5,
+          rank: this.#rank,
+          hand: "フラッシュ(クローバー)",
+        };
+      }
     }
     // ストレートの判定
     else if (this.isStraight(_cards)) {
