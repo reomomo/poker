@@ -46,15 +46,15 @@ export default class Pair {
       cards[0].suit === cards[3].suit && // 1,4枚目が同じ絵柄
       cards[0].suit === cards[4].suit && // 1,5枚目が同じ絵柄
       // 1枚目のランクが2
-      cards[0].rank == 2 &&
-      // 2枚目のランクが3
-      cards[1].rank == 3 &&
-      // 3枚目のランクが4
-      cards[2].rank == 4 &&
-      // 4枚目のランクが5
-      cards[3].rank == 5 &&
-      // 5枚目のランクが14
-      cards[4].rank == 14
+      cards[0].rank === 2 &&
+      // 1,2枚目のランクが連続
+      cards[0].rank + 1 === cards[1].rank &&
+      // 2,3枚目のランクが連続
+      cards[1].rank + 1 === cards[2].rank &&
+      // 3,4枚目のランクが連続
+      cards[2].rank + 1 === cards[3].rank &&
+      // 5枚目のランクが14（A)
+      cards[4].rank === 14
     ) {
       isPair = true;
     // 5枚のランクを合計
@@ -176,13 +176,13 @@ export default class Pair {
     if (
       // 1枚目のランクが2
       cards[0].rank === 2 &&
-      // 2枚目のランクが3
-      cards[1].rank === 3 &&
-      // 3枚目のランクが4
-      cards[2].rank === 4 &&
-      // 4枚目のランクが5
-      cards[3].rank === 5 &&
-      // 5枚目のランクが14
+      // 1,2枚目のランクが連続
+      cards[0].rank + 1 === cards[1].rank &&
+      // 2,3枚目のランクが連続
+      cards[1].rank + 1 === cards[2].rank &&
+      // 3,4枚目のランクが連続
+      cards[2].rank + 1 === cards[3].rank &&
+      // 5枚目のランクが14（A)
       cards[4].rank === 14
     ) {
       isPair = true;
