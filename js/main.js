@@ -38,8 +38,8 @@ export default class Game {
     Util.addEventListener(".card.you", "click", this.#onClickCard.bind(this));
     // Drawボタンのクリックイベント
     Util.addEventListener("#draw", "click", this.#onDraw.bind(this));
-    // Challengeボタンのクリックイベント
-    Util.addEventListener("#challenge", "click", this.#onChallenge.bind(this));
+    // ShowDownボタンのクリックイベント
+    Util.addEventListener("#showDown", "click", this.#onShowDown.bind(this));
     // Replayボタンのクリックイベント
     Util.addEventListener("#replay", "click", this.#onReplay.bind(this));
   }
@@ -114,11 +114,11 @@ export default class Game {
     if (this.#isRunning) {
       document.querySelector("#replay").setAttribute("disabled", true);
       document.querySelector("#draw").removeAttribute("disabled");
-      document.querySelector("#challenge").removeAttribute("disabled");
+      document.querySelector("#showDown").removeAttribute("disabled");
     } else {
       document.querySelector("#replay").removeAttribute("disabled");
       document.querySelector("#draw").setAttribute("disabled", true);
-      document.querySelector("#challenge").setAttribute("disabled", true);
+      document.querySelector("#showDown").setAttribute("disabled", true);
     }
   }
 
@@ -160,14 +160,24 @@ export default class Game {
     this.#com.selectedNodes.forEach(() => {
       this.#cards.unshift(this.#com.drawCard(this.#cards.pop()));
     });
-    // ゲーム実行状態を更新
-    this.#isRunning = true;
+    const comResult = Pair.judge(this.#com.cards);
+    if (comResult.strength >= 3) {
+      // 画面の描画を更新する
+      this.#updateView();
+      // 1秒待つ
+      await Util.sleep(); // デフォルトは1秒
+      // 勝敗を判定する
+      this.#judgement();
+    } else {
+      // ゲーム実行状態を更新
+      this.#isRunning = true;
+    }
   }
 
   /**
-   * Challengeボタンのクリックイベントハンドラ
+   * ShowDownボタンのクリックイベントハンドラ
    */
-  async #onChallenge(event) {
+  async #onShowDown(event) {
     // ゲーム実行状態を更新
     this.#isRunning = false;
     // 画面の描画を更新する
@@ -177,7 +187,6 @@ export default class Game {
     // 勝敗を判定する
     this.#judgement();
   }
-
 
   /**
    * 勝敗を判定する
@@ -211,8 +220,6 @@ export default class Game {
     // メッセージを表示する
     alert(message);
   }
-
-
 
   /**
    * Replayボタンのクリックイベントハンドラ
